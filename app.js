@@ -1,8 +1,8 @@
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
 
-import contactsRouter from "./routes/contactsRouter.js";
+const contactsRouter = require("./routes/contactsRouter");
 
 const app = express();
 
@@ -19,6 +19,7 @@ app.use((_, res) => {
 app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
+  next();
 });
 
 app.listen(3000, () => {
