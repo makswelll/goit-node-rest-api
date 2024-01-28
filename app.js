@@ -1,8 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const mongoose = require("mongoose");
+
+require("dotenv").config();
 
 const contactsRouter = require("./routes/contactsRouter");
+
+const { DB_ADMIN_NAME, DB_ADMIN_PASSWORD, DB_CLUSTER_NAME, DB_COLLECTION } =
+  process.env;
+
+const DB_HOST_NEW = `mongodb+srv://${DB_ADMIN_NAME}:${DB_ADMIN_PASSWORD}@${DB_CLUSTER_NAME}.mongodb.net/${DB_COLLECTION}`;
 
 const app = express();
 
@@ -22,6 +30,15 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(3000, () => {
-  console.log("Server is running. Use our API on port: 3000");
-});
+mongoose
+  .connect(DB_HOST_NEW)
+  .then(() => console.log("Database connection successful"))
+  .then(() =>
+    app.listen(3000, () =>
+      console.log("Server is running. Use our API on port: 3000")
+    )
+  )
+  .catch((err) => {
+    console.error(err.message);
+    process.exit(1);
+  });

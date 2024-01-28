@@ -23,4 +23,10 @@ contactsRouter.put(
   ctrl.updateContact
 );
 
+contactsRouter.patch(
+  "/:id/favorite",
+  validateBody(schema.favoriteSchema),
+  ctrl.updateFavorite
+);
+
 module.exports = contactsRouter;
