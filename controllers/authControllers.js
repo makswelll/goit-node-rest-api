@@ -64,7 +64,7 @@ const verifyEmail = async (req, res) => {
   });
 };
 
-const resentVerifyEmail = async (req, res) => {
+const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
@@ -165,7 +165,7 @@ const updateAvatar = async (req, res) => {
 module.exports = {
   register: ctrlWrapper(register),
   verifyEmail: ctrlWrapper(verifyEmail),
-  resentVerifyEmail: ctrlWrapper(resentVerifyEmail),
+  resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
